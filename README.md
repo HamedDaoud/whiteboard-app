@@ -109,6 +109,31 @@ whiteboard-app/
 - **`ingest_wikipedia.py`** — manually index a topic. Useful before running `sanity_check.py`.  
 - **`sanity_check.py`** — checks retrieval on a topic that is already indexed (e.g., `Linear algebra` with query `eigenvalues`).  
 
+### Script Usage Examples
+
+> Run these from the repo root with your venv activated and Milvus running.
+
+**1) End-to-End Smoke Test**
+```bash
+python scripts/smoke.py
+# expect: ALL GOOD ✅
+```
+
+**2) Ingest a Topic (Wikipedia → clean → chunk → embed → index)**
+```bash
+python scripts/ingest_wikipedia.py "Linear algebra"
+```
+Force re-ingestion (refresh the stored chunks):
+```bash
+python scripts/ingest_wikipedia.py "Linear algebra" --force
+```
+
+**3) Sanity Check (topic must already be indexed)**
+```bash
+python scripts/sanity_check.py
+# checks retrieval on "Linear algebra" with query "eigenvalues"
+```
+
 ---
 
 ## Source Choice for MVP
@@ -119,5 +144,5 @@ This is the best decision for an MVP: online fetching, cleaning, and chunking fr
 
 ## Usage Notes
 - Retrieval is on-demand: the first query ingests, subsequent queries reuse the index.  
-- Chunks are sized to match the embedding model’s limit.
+- Chunks are sized to match the embedding model’s limit.  
 - All chunks carry citation metadata (`url`, `title`, `section`) and can be surfaced directly in downstream outputs.  
