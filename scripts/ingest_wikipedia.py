@@ -60,10 +60,11 @@ def main() -> int:
     else:
         print(f"Topic {topic!r} already indexed. Skipping ingestion.")
 
-    # Count how many chunks are present
     n = _count_chunks(store, topic)
     if n >= 0:
-        print(f"Ingested chunks for {topic!r}: {n}")
+        suffix = " (>=16384; capped by Milvus window)" if n == 16384 else ""
+        print(f"Ingested chunks for {topic!r}: {n}{suffix}")
+
 
     # Show a few preview hits (topic-as-query)
     print("\nPreview (top-k):")

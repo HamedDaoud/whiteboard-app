@@ -14,6 +14,10 @@ from .ingestion.chunk import chunk_sections
 from .embeddings.model import Embedder
 from .index.milvus_store import MilvusStore
 
+import logging
+logging.getLogger("transformers").setLevel(logging.ERROR)
+
+
 
 # ---------- Public schema ----------
 
