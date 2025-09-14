@@ -67,8 +67,10 @@ whiteboard-app/
     ingest_wikipedia.py   # manually ingest a topic
     sanity_check.py       # check retrieval on an already indexed topic
     smoke.py              # end-to-end pipeline check
+    test_content_generator.py # run content generation pipeline
   src/whiteboard/
     retrieval.py          # public API
+    content_generator.py  # content generation pipeline
     ingestion/            # fetch, clean, chunk
     embeddings/           # embedding wrapper
     index/                # Milvus integration
@@ -223,9 +225,3 @@ For topic "Artificial Intelligence":
   ```bash
   python scripts/test_content_generator.py "Your Topic" | tee log.txt
   ```
-
-### Notes
-
-- The content generator relies on the retrieval pipeline (`get_chunks`). Ensure Milvus is running (`docker compose up -d`) and the topic is indexed or will be fetched on-demand.
-- Generated content is stored in the Supabase `lessons` table with fields: `topic`, `lesson`, `quiz`, `retrieved_chunks`, and `created_at`.
-- For testing, run `scripts/smoke.py` first to verify the retrieval pipeline, then use `test_content_generator.py` for content generation.
